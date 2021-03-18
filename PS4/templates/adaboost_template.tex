@@ -1,0 +1,57 @@
+\section{Multiclass Adaboost and Support Vector Machines} 
+
+\subsection{Adaboost: Theory}
+
+\paragraph{(a)}
+Show that
+\[
+%D_{T+1}(i) = \frac{D_1(i) \, \exp\big(-\textstyle{\sum_{t=1}^T} \alpha_t \, \tilde{h}_{t,y_i}(x_i) \big)}{\prod_{t=1}^T Z_t}
+D_{T+1}(i) ~ = ~ \frac{\frac{1}{m} \, e^{-F_{T,y_i}(x_i)}}{\prod_{t=1}^T Z_t}
+	\,.
+\] 
+
+
+\paragraph{(b)}
+Show that 
+\[
+\1(H(x_i)\neq y_i) ~ \leq ~
+%	\1\big( \textstyle{\sum_{t=1}^T} \alpha_t \, \tilde{h}_{t,y_i}(x_i) < 0 \big)
+	\1\big( F_{T,y_i}(x_i) < 0 \big)
+	\,.
+\]
+
+\paragraph{(c)}
+Show that 
+\[
+\er_S[H] ~ \leq ~
+%	\frac{1}{m} \sum_{i=1}^m \exp\big( -{\textstyle{\sum_{t=1}^T}} \alpha_t \, \tilde{h}_{t,y_i}(x_i) \big) 
+	\frac{1}{m} \sum_{i=1}^m e^{-F_{T,y_i}(x_i)}
+	~ = ~
+	\prod_{t=1}^T Z_t
+	\,.
+\]
+\emph{Hint:} For the inequality, use the 
+%fact that $\1(H(x_i)\neq y_i) \leq \1\big( \textstyle{\sum_{t=1}^T} \alpha_t \, \tilde{h}_{t,y_i}(x_i) < 0 \big)$, 
+result of part (b) above, 
+and the fact that $\1(u<0) \leq e^{-u}$; for the equality, use the result of part (a) above.
+
+\paragraph{(d)}
+Show that for the given choice of $\alpha_t$, we have 
+\[
+Z_t ~ = ~ 2 \sqrt{\er_t(1-\er_t)}
+	\,.
+\]
+\paragraph{(e)}
+Suppose $\er_{t} \leq \frac{1}{2} - \gamma$ for all $t$ (where $0 < \gamma \leq \frac{1}{2}$). Then show that 
+\[
+\er_S[H] ~ \leq ~ e^{-2T\gamma^2}
+	\,.
+\]
+
+\subsection{Support Vector Machine}
+\begin{center}
+    \includegraphics[width=0.42\textwidth]{templates/SVM.png}
+\end{center}
+What is the largest number of data points that can be removed from the training set without changing the hard margin SVM solution? Explain your solution.
+
+$\ldots$

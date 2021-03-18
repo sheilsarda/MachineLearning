@@ -1,0 +1,38 @@
+\section{Neural Networks: Backpropagation}
+
+ Your task is to now compute the derivatives of the loss function given in \ref{eqn:five} with respect to $W_{1}$, $W_{2}$, $b_{1}$ and $b_{2}$ by hand, i.e., $\frac{\partial Loss}{\partial W_{1}}$, $\frac{\partial Loss}{\partial b_{1}}$,  and $\frac{\partial Loss}{\partial b_{2}}$.
+
+\begin{equation}
+Loss = y * ln(\sigma(z_{2})) + (1-y) * ln(1-\sigma(z_{2}))
+\label{eqn:five}
+\end{equation}
+
+
+Show all the intermediate derivative computation steps. You might benefit from making a rough schematic of the backpropagation process. Also recall the derivatives of the softmax function and the tanh function:
+
+\begin{equation}
+\frac{d\sigma(z_{2})}{dz} = \sigma(z_{2}) * (1-\sigma(z_{2}))
+\label{eqn:six}
+\end{equation}
+
+\begin{equation}
+\frac{\partial tanh(z_{1})}{\partial z_{1}} = 1 - tanh^2(z_{1})
+\label{eqn:twelve}
+\end{equation}
+
+\begin{equation}
+\frac{\partial Loss}{\partial W_{1}} = \ldots
+\end{equation}
+
+\begin{equation}
+\frac{\partial Loss}{\partial W_{2}} = \ldots
+\end{equation}
+
+\begin{equation}
+\frac{\partial Loss}{\partial b_{1}} = \ldots
+\end{equation}
+
+\begin{equation}
+\frac{\partial Loss}{\partial b_{2}} = \ldots
+\end{equation}
+

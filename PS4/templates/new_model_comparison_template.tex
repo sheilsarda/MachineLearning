@@ -1,0 +1,88 @@
+\section{Programming }
+
+\subsection{Random Forests}
+
+Tabulate the prediction results on the test set in Table \ref{rfTable}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{n\_estimators} & \textbf{Accuracy (\%)} \\
+ \hline
+ 1 & 73 \% \\ 
+ 5 & 92 \% \\ 
+ 10 & 95 \% \\
+ 50 & 96 \%\\ 
+ 100 & 97 \%\\ 
+ 500 & 97 \%\\
+ \hline
+\end{tabular}
+\caption{Accuracy for the Random Forests classification problem on the test set}
+\label{rfTable}
+\end{table}
+
+\subsection{Kernel SVM}
+
+Tabulate the prediction results on the test set in Table \ref{ksvmTable}.
+\begin{table}[H]
+\centering
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{kernel} & \textbf{Accuracy (\%)} \\
+ \hline
+ Linear & 98 \% \\ 
+ Poly & 99 \% \\
+ RBF & 98 \%\\ 
+ \hline
+\end{tabular}
+\caption{Accuracy for the kernel SVM classification problem on the test set}
+\label{ksvmTable}
+\end{table}
+
+\subsection{Multi Layer Perceptron}
+
+Tabulate the prediction results on the test set in Table \ref{mlpTable}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{Network Architecture} & \textbf{Accuracy (\%)} \\
+ \hline
+ (3) & 85 \% \\ 
+ (10) & 94 \% \\
+ (10,10,10) & 92 \% \\ 
+ (20,50,20) & 96 \% \\ 
+ \hline
+\end{tabular}
+\caption{Accuracy for the MLP classification problem on the test set}
+\label{mlpTable}
+\end{table}
+
+\subsection{AdaBoost}
+Tabulate the prediction results on the test set in Table \ref{ABTable}.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ |c|c| } 
+ \hline
+ \textbf{n\_estimators} & \textbf{Accuracy (\%)} \\
+ \hline
+ 1 & 43 \% \\ 
+  5 & 82 \%\\ 
+ 10 & 83 \% \\
+ 50 & 89 \% \\ 
+ 100 & 92 \% \\ 
+ 150 & 92 \% \\
+ \hline
+\end{tabular}
+\caption{Accuracy for the AdaBoost classification problem on the test set}
+\label{ABTable}
+\end{table}
+\subsection{Short Answer}
+
+For the random forest, AdaBoost and the Multi Layer Perceptron, we see that accuracy improves from the 70-80 \% range to the low to high 90\%. 
+
+For the Kernel SVM, linear, polynomial and RBF worked well, but the polynomial kernel performed the best. This indicates that the correct decision boundary is best described by a polynomial function, and the RBF and Linear are underfitting or overfitting the model respectively.
