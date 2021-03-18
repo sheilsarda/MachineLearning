@@ -1,0 +1,99 @@
+\section{Regression Models and Squared Errors}
+Regression problems involves instance spaces $\mathcal{X}$ and labels, and the predictions, which are real-valued as $\mathcal{Y}=\hat{\mathcal{Y}}=\mathbb{R}$. One is given a training sample $S=((x_1,y_1),...,(x_m,y_m)) \in (\mathcal{X} \times \mathbb{R})^m$, and the goal is to learn a regression model $f_S: \mathcal{X} \rightarrow \mathbb{R}$ . The metric used to measure the performance of this regression model can vary, and one such metric is the squared loss function. The questions below ask you to work with regression problems and squared error losses.
+\begin{enumerate}
+	\item The squared error is given by $ \mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-y)^2]$, where the examples are drawn from a joint probability distribution $p(X,Y)$ on $\mathcal{X} \times \mathbb{R}$. Find the lower bound of the expression $\mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-y)^2]$.  From this lower bound, what is the optimal expression of $f(x)$, in terms of $x$ and $Y$? 
+	
+	\begin{align*}
+		\mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-y)^2] &= \mathbb{E}_{(x,y) 
+			\sim p(X,Y)}[(f(x)+\mathbb{E}_{y(y|x)}-\mathbb{E}_{y(y|x)-y})^2] \\
+		&= \mathbb{E}_{(x,y) \sim  p(X,Y)}[(f(x)-\mathbb{E}_y(y|x))^2+(f(x)-\mathbb{E}_y(y|x))(\mathbb{E}_y(y|x)-y)+(\mathbb{E}_y(y|x)-y)^2]\\
+		&= \mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-\mathbb{E}_y(y|x))^2] \\
+		&+ \mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-\mathbb{E}_y(y|x))(\mathbb{E}_y(y|x)-y)]\\
+		&+ \mathbb{E}_{(x,y) \sim p(X,Y)}[(\mathbb{E}_y(y|x)-y)^2]\\
+		&= \mathbb{E}_{(x,y) \sim p(X,Y)}[(f(x)-\mathbb{E}_y(y|x))^2]+\mathbb{E}_{(x,y) \sim p(X,Y)}[(\mathbb{E}_y(y|x)-y)^2]\\
+		&\ge \mathbb{E}_{(x,y) \sim p(X,Y)}[(\mathbb{E}_y(y|x)-y)^2]
+	\end{align*}
+	
+	$$ f(x) = \mathbb{E}_y(y|x) $$
+	
+	\item 
+	With this result, complete the following two problems. Consider the regression task in which instances contain two features, each taking values in $[0,1]$, so that the instance space is $\mathcal{X}=[0,1]^2$, and with label and prediction spaces belonging to the real space. Suppose examples $(\mathbf{x},y)$ are drawn from the joint probability distribution $D$, whose marginal density on $\mathcal{X}$ is given by
+	$$\mu (\mathbf{x}) = 2x_1, \; \; \; \forall \mathbf{x} = (x_1,x_2) \in \mathcal{X} $$
+	and the conditional distribution of $Y$ given $\mathbf{x}$ is given by 
+	
+	$$Y|X = \mathbf{x} \sim \mathcal{N}(x_1 - 2x_2 +2,1)$$ 
+	
+	What is the optimal regression model $f^*(X)$ and the minimum achievable squared error for $D$?
+	
+	$$ f(x) = \mathbb{E}_y(Y|X) = x_1-2x_2+2 $$
+	
+	\begin{align*}
+		L_D[f^*] &= \mathbb{E}_D[(\mathbb{E}_y(Y|X)-Y)^2] = \mathbb{E}_D[(x_1-2x_2+2-y)^2]\\
+		&= \int_0^1 \int_\mathbb{R}((x_1-2x_2+2-y)^2(2x_1)\mathcal{N}(x_1-2x_2+2,1))dydx\\
+		&= \int_0^12x_1 \int_\mathbb{R}((x_1-2x_2+2-y)^2\mathcal{N}(x_1-2x_2+2,1))dydx
+	\end{align*}
+	
+	Let $a=x_1 - 2 x_2 + 2$,
+	\begin{align*}
+		\int_\mathbb{R}^{} ((x_1-2x_2+2-y)^2 \mathcal{N}(x_1-2x_2+2,1))dy &= 
+		\int_\mathbb{R}^{} (a-y)^2 \frac{1}{\sqrt{2\pi}} e^{\frac{- \left({y - a } \right)^2 } { 
+2}} dy\\
+		&=\int_\mathbb{R}y^2\frac{1}{\sqrt {2\pi }} \times e^{ \frac{-y^2}{2} } dy\\
+		&= \mathbb{E} (Y^2)\\
+		&= (\mathbb{E} (Y))^2+Var(Y)\\
+		&= 0+1 =1
+	\end{align*}
+	
+	Thus,
+	\begin{align*}
+		L_D[f^*]&=\; 
+		\int_0^12x_1dx_1\\
+		&=\; 1
+	\end{align*}
+	
+	\item 
+	Suppose you give your friend a training sample $S = ((\mathbf{x}_1,y_1),...,(\mathbf{x}_m,y_m))$ containing $m$ examples drawn i.i.d from $D$, and your friend learns a regression model given by 
+	$$f_S(\mathbf{x}) = x_1 - 2x_2, \; \; \; \forall \mathbf{x} = (x_1,x_2) \in \mathcal{X}$$
+	Find the squared error of $f_S$ with respect to $D$. 
+	
+	\begin{align*}
+		L_D[f_S] &=\; \mathbb{E}_D[(x_1-2x_2-y)^2]\\
+		&=\; \int_0^1 \int_\mathbb{R}((x_1-2x_2+2-y-2)^2(2x_1)\mathcal{N}(x_1-2x_2+2,1))dydx\\
+		&=\; \int_0^12x_1 \int_\mathbb{R}(x_1-2x_2+2-y-2)^2\mathcal{N}(x_1-2x_2+2,1))dydx\\
+	\end{align*}
+	
+	Following the steps in part 2, we have
+	\begin{align*}
+		\int_\mathbb{R}(x_1-2x_2+2-y-2)^2\mathcal{N}(x_1-2x_2+2,1))dy &=\;\int_\mathbb{R}((y-a)^2+4(y-a)+4)\mathcal{N}(a,1))dy\\
+		&=\;\int_\mathbb{R}(y-a)^2\mathcal{N}(a,1))dy\\
+		&+\;\int_\mathbb{R}4(y-a)\mathcal{N}(a,1))dy\\
+		&+\;\int_\mathbb{R}4\mathcal{N}(a,1))dy\\
+		&=\;1+0+4=5
+	\end{align*}
+	Thus,
+	\begin{align*}
+		L_D[f_S] &=\; 5\int_0^12x_1dx\\
+		&=\; 5
+	\end{align*}
+	
+	\item  
+	
+	Consider a linear model of the form $$f(\mathbf{x},\mathbf{w}) = w_0 + \sum_{i=1}^{P}w_ix_i$$ together with a sum of squares error function of the form 
+	$$L_P(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^{N}(f(\mathbf{x}_n,\mathbf{w})-\mathbf{t}_n)^2$$
+	where $P$ is the dimensionality of the vector $\mathbf{x}$, $N$ is the number of training examples, and $\mathbf{t}$ is the ground truth target . Now suppose that the Gaussian noise $\epsilon_i$ with zero mean and variance $\sigma^2$ is added independently to each of the input variables $x_i$. By making use of $\mathbb{E}[\epsilon_i]=0$ and $\mathbb{E}[\epsilon_i \epsilon_j]= \delta_{ij}\sigma^2$, show that minimizing $L_P$ averaged over the noise distribution is equivalent to minimizing the sum of squares error for noise-free input variables $L_P$ with the addition of a weight-decay regularization term, in which the bias parameter $w_0$ is omitted from the regularizer.
+	
+	Firstly, we take N=1
+\begin{align*}
+\mathbb{E}[\tilde{L}] &=\; \mathbb{E}[ \frac{1}{2}(f(\mathbf{x},\mathbf{w})-t)^2]\\
+&=\; \mathbb{E}[\frac{1}{2} (w_0 + \sum_{i=1}^{P}w_i(x_i+\epsilon_i)-t)^2]\\
+&=\; \frac{1}{2}\mathbb{E}[w_0^2+t^2+\sum_{i=1}^{P}w_i^2x_i^2+w_0(w_0+\sum_{i=1}^{P}w_ix_i-t)-t(w_0+\sum_{i=1}^{P}w_ix_i-t)+\sum_{i=1}^{P}w_ix_i(w_0+\sum_{j\neq j}w_ix_i-t)]\\
+&=\;\frac{1}{2}(f(\mathbf{x},\mathbf{w})-t)^2 + \frac{\sigma^2}{2}\sum_{i=1}^{P}w_i^2
+\end{align*}
+In general, 
+\begin{align*}
+\mathbb{E}[\tilde{L}]
+&=\;\frac{1}{2}\sum_{n=1}^{N}(f(\mathbf{x}_n, \mathbf{w})-\mathbf{t}_n)+\frac{N\sigma^2}{2}\sum_{i=1}^{P}w_i^2\\
+&=\; L_P(\mathbf{w})+\frac{N\sigma^2}{2}\sum_{i=1}^{P}w_i^2
+\end{align*}
+
+\end{enumerate}

@@ -1,0 +1,38 @@
+\section{Programming: Batch Gradient Descent}
+
+\begin{enumerate}
+	\item \textbf{OLS runtime.} Time the closed-form unregularized linear regression  implementation you wrote in previous section on the full training data for Data Set 1. Write down the weight and bias terms, $\hat{w}$ and $\hat{b}$, learned from the full training data, as well as the $L_2$ error on the test data, and the time it took to run the full process.
+	
+	\begin{align*}
+	\hat{w} &= \;      -2.23442 \\
+	\hat{b} &= \;       1.16717 \\
+	L2 \text{ error} &= 0.33476 \\
+	\text{time} &=\;    0.00133 \\
+	\end{align*}
+	
+	
+	\item \textbf{Gradient descent runtime.} Time the gradient descent implementation you just wrote on the full training data for Data Set 1 with iterations from range $\{$10, 100, 1000$\}$, and a learning rate of 0.01. Write down the weight and bias terms, $\hat{w}$ and $\hat{b}$, learned from the full training data, as well as the $L_2$ error on the test data, and the time it took to run the full process. 
+	
+	
+	\begin{align*}
+	\textbf{100 Iterations:} \\
+	\hat{w} &= \; 0.0300179 \\
+	\hat{b} &= \; 0.09480728 \\
+	L2 \text{ error} &= \; 0.6611824852426563 \\
+	\text{time} &=\; 0.002912282943725586 \\
+	\textbf{1000 Iterations:} \\
+	\hat{w} &= \; 0.75698276 \\
+	\hat{b} &= \; -1.47418892 \\
+	L2 \text{ error} &= \; 2.4401471307741174 \\
+	\text{time} &=\; 0.030885696411132812 \\
+	\textbf{2000 Iterations:} \\
+	\hat{w} &= \; 1.04606972 \\
+	\hat{b} &= \; -2.00997274 \\
+	L2 \text{ error} &= \; 3.698775500730846 \\
+	\text{time} &=\; 0.044022321701049805 \\
+	\end{align*}
+	
+	\item \textbf{Comparison of algorithms.} Which algorithm runs faster? Why might that be the case? Why would we ever use gradient descent linear regression in practice while a closed form solution exists?
+	
+	In this example, the closed form solution was faster. In practice, as the number of data points scales, gradient descent becomes faster because it does not require inverting the $n \times p$ sized matrix, and converges quickly.
+\end{enumerate}

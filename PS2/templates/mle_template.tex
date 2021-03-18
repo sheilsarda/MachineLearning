@@ -1,0 +1,74 @@
+
+
+\section{Maximum Likelihood Estimation}
+
+\begin{enumerate}
+\item 
+\begin{enumerate}
+    \item  Suppose that there are blue (B) and red (R) balls in a box and the frequency of blue balls is $\theta$. That is, a random draw from the basket will result in drawing a blue ball with a probability $\theta$ and drawing a red ball with a probability $1-\theta$. Let's say each person draws two balls replacing the ball after each draw. So a person can draw either one of these three combinations (BB, BR, RR). What are the probabilities of each of the outcomes?
+    \begin{align*}
+        P(BB) &= \theta^2\\
+        P(BR) &= 2\theta(1-\theta)\\
+        P(RR) &= (1-\theta)^2
+    \end{align*}
+    
+    
+    \item  Suppose that in the population $p_1$ people draw BB, $p_2$ people draw BR and $p_3$ people draw RR. What is the log likelihood function $LL(P(D/\theta)$  Find the Maximum Likelihood estimate of $\theta$?
+    
+    \begin{align*}
+        LL(P(D/\theta)) &= \frac{1}{p_1+p_2+p_3}[p_1 \times logP(BB)+p_2 \times logP(BR)+p_3 \times logP(RR)]\\
+        				&=\frac{(2p_1+p_2) \times \log \theta +(2p_3+p_2) \times log (1-\theta) + p_2 \times \log 2}{p_1+p_2+p_3} \\
+        				\text{The derivative vanishes at the maximum:} \\	
+0 = LL'(\theta) &= \frac{1}{p_1+p_2+p_3} (\frac{2p_1+p_2}{\theta} - \frac{2p_3+p_2}{1-\theta})
+\end{align*}
+   The derivative vanishes at the maximum.
+    Thus,
+   $$ MLE(\theta)(\hat{\theta}) = \frac{2p_1+p_2}{2p_1+p_2+p_3}$$
+    
+    
+
+    \item  Suppose that out of 100 people, 50 draw BB combination, 10 draw BR combination and 40 draw RR combination. What is the MLE estimate of $\theta$ (fraction of blue balls)?
+    Plugging into the equation above
+            $$ \hat{\theta} = \frac{2*50+10}{200}=\frac{11}{20} $$
+            
+    
+\end{enumerate}
+\item We have a dataset with $N$ records in which the $i^{th}$ record has one real-valued input attribute $x_i$ and one real-valued output attribute $y_i$. The model has one unknown parameter $w$ to be learned from data, and the distribution of $y_i$ is given by 
+ $$y_i \sim \mathcal{N}(\log (wx_i),1)$$
+ Suppose you decide to do a maximum likelihood estimation of $w$. What equation does $w$ need to satisfy to be a maximum likelihood estimate?
+ 
+ Firstly, we calculate LL
+\begin{align*}
+    LL 	&= - \log(\prod_{i=1}^{N} \mathcal{N}(\log_{10}(wx_i),1)) \\
+    	&= \frac{1}{2}\sum_{i=1}^{N}(y_i-log(wx_i))^2+C
+\end{align*}
+Take $LL'(w)=0$, we have
+$$ w = exp\left(\frac{\sum_{i=1}^{N} (y_i-log(x_i))}{N}\right) $$
+
+\item Consider a linear basis function regression model for a multivariate target variable $\mathbf{t}$ having a Gaussian distribution of the form 
+ $$p(\mathbf{t}|\mathbf{W},\mathbf{\Sigma}) = \mathcal{N}(\mathbf{t}|f(\mathbf{x},\mathbf{W}),\mathbf{\Sigma})$$
+ where 
+ $$f(\mathbf{x,W}) = \mathbf{W}^T \phi(\mathbf{x})$$
+ together with a training data set comprising input basis vectors $\phi (\mathbf{x}_n)$ and corresponding target vectors $\mathbf{t}_n$ with $n=1,2, \dots , N$. Show that the maximum likelihood solution $\mathbf{W}^{*}$ for the parameter matrix $\mathbf{W}$ has the property that each column is given by the solution to a univariate target variable. Note that this is independent of the covariance matrix $\mathbf{\Sigma}$. 
+ 
+ Also, give the maximum likelihood solution for $\mathbf{\Sigma}$ -- feel free to use standard results for the MLE solution of $\Sigma$ in your answer. 
+% LL is log likelihood
+\begin{align*}
+    LL &=\;-log(\prod_{n=1}^{N}\mathcal{N}(\mathbf{t}_n|\mathbf{W}^T\phi(\mathbf{x}_n),\mathbf{\Sigma})) \\ 
+    &=\;\frac{1}{2}\sum_{n=1}^{N}(\mathbf{t}_n-\mathbf{W}^T\phi(\mathbf{x}_n))^T \mathbf{\Sigma}^{-1}(\mathbf{t}_n-\mathbf{W}^T\phi(\mathbf{x}_n)) + C
+\end{align*}
+From the above, we have    
+\begin{align*}  
+    LL'(\mathbf{W}) &=\; -\mathbf{\Sigma}^{-1}\sum_{n=1}^{N}(\mathbf{t}_n-\mathbf{W}^T\phi(\mathbf{x}_n))\phi(\mathbf{x}_n)^T
+\end{align*}
+Take LL'($\mathbf{W}$) = 0
+$$ \mathbf{W}^{*} = (\Phi(x)^T\Phi(x))^{-1}{\Phi}^T $$
+Where $\mathbf{\Phi} = [\phi(\mathbf{x}_1), ...,\phi(\mathbf{x}_N)]^T$, $T = [\mathbf{t}_1, ..., \mathbf{t}_N]^T$.\\
+Then ith column of $\mathbf{W}^*$ is $(\mathbf{\Phi}^T\mathbf{\Phi})^{-1}\mathbf{\Phi}\mathbf{t}^i$, which is the solution to target value $t_n^i$, i.e. the ith component of $\mathbf{t}_n$. So each column of $\mathbf{W}^{*}$ is given by the solution to a univariate target variable.\\
+The maximum likelihood solution for $\mathbf{\Sigma}$ is 
+$$
+\mathbf{\Sigma}^* = \frac{1}{N}\sum_{n=1}^{N}(\mathbf{t}_n-\mathbf{W^*}^T\phi(\mathbf{x}_n))\phi(\mathbf{x}_n)^T
+$$
+
+
+\end{enumerate}
