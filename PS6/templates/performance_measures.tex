@@ -1,0 +1,72 @@
+\section{Performance Measures for Face Detection in Images}
+Consider a face detection problem, where the goal is to build a system that can automatically detect faces in images. Two research groups develop systems for this problem using slightly different approaches. In both cases, the central component of the system is a binary classifier which, when applied to a $24 \times 24$ image, decides whether or not it is a face. The two groups train their classifiers using different learning algorithms. Moreover, when given a new image, they also apply their classifiers in slightly different ways: group A tests $24 \times 24$ regions of the image taking strides of size 2 (so, for example, for a $100 \times 100$ image, $(39)^2$ regions would be tested); group B tests $24 \times 24$ regions of the image taking strides of size 5 (so here, for a $100 \times 100$ image, only $(16)^2$ regions would be tested).\footnote{In practice, the $24\times 24$ classifier would also be applied to multiple scaled versions of the input image; we ignore this issue here for simplicity.}
+On a standard benchmark suite of test images that contains 300 faces altogether, the two groups have the following performances (assume the regions tested by both systems include all the 300 true face regions):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Research group} & \textbf{Number of regions} & \textbf{Number of faces} & \textbf{Number of non-face regions} \\
+	& \textbf{tested} & \textbf{detected correctly} & \textbf{detected as faces} \\
+\hline
+A & 20,000 & 280 & 100 \\
+\hline
+B & 12,500 & 270 & 60 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item 
+Based on the above numbers, calculate the TPR (recall), TNR, and precision of each group's system as tested. 
+Also calculate the resulting geometric mean (GM) and $F_1$ measures for each system.
+If you were to select a system based on the GM measure, which system would you choose? Would your choice change if you were to select a system based on the $F_1$ measure? (Note, the geometric mean (GM) is defined as $\sqrt{TPR\times TNR}$.)
+
+Research Group A:
+    TPR = 0.9333, TNR = 0.9949, precision = 0.7368\\
+Research Group B:
+    TPR = 0.9000, TNR = 0.9951, precision = 0.8182\\
+And for Group A: GM = 0.9636, F1 = 0.8235\\
+And for Group B: GM = 0.9462, F1 = 0.8571\\
+   
+For GM measure we select A, and we will change to B based on the F1 measure.\\
+    
+\item 
+Which performance measure would be more suitable for this problem -- the GM measure or the $F_1$ measure? Why?
+
+$F_1$ measure. 
+
+Comparing to $F_1$, GM measure releases more information about recognizing non-face regions as faces. In this regard, $F_1$ is more suitable.\\
+    
+\item  Another way to determine which method to choose would be to look at the ROC curve. Because you are given instances of different algorithms, not the algorithm itself, each method corresponds to a \textit{point} on the TPR vs. FPR graph, not a curve. \\ \ \\ What is the Euclidean distance from each instance to the 0-error (perfect classification) point $(0,1)$? Based on this metric, which method would you choose? 
+
+A: 0.0669, B:0.1001\\
+A will be chosen, because it is closer to the perfect point.
+
+\item 
+Now assume that there is a third group C which trains their classifier using a newly discovered learning algorithm. Some of the resulting statistical measures are described below:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+
+\hline
+\textbf{Research group} & \textbf{TPR} & \textbf{TNR} & \textbf{FPR} & \textbf{FNR}  \\
+\hline 
+C & 0.95 & 0.990 & 0.01 & 0.05 \\
+\hline
+
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+    \item Suppose you worked for a social media platform, where you want to identify as many faces as possible for your photo tagging systems (prioritize recall). Would you prefer the algorithm created by group C over the algorithms created by groups A and B?\\
+    
+    Yes. Because the TPR of A and B are smaller than that of C in this case.
+    
+    \item Now suppose you worked for law enforcement, where every face detected will be checked against a criminal database, which is an expensive operation. You'd like maximize specificity (1 - FPR) in this case to avoid unnecessary costs. Would you prefer the algorithm created by group C over the algorithms created by groups A and B?\\
+    
+    No. Because the TPR of A and B are larger than that of C in this case.
+    
+\end{enumerate}
+
+
+\end{enumerate}

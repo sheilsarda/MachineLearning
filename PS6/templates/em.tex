@@ -1,0 +1,78 @@
+\section{EM Algorithm with Red and Blue Coins} 
+Your friend has two coins: a red coin and a blue coin, with biases $p_r$ and $p_b$, respectively (i.e.\ the red coin comes up heads with probability $p_r$, and the blue coin does so with probability $p_b$). She also has an inherent preference $\pi$ for the red coin. She conducts a sequence of $m$ coin tosses: for each toss, she first picks either the red coin with probability $\pi$ or the blue coin with probability $1-\pi$, and then tosses the corresponding coin; the process for each toss is carried out independently of all other tosses. 
+You don't know which coin was used on each toss; all you are told are the outcomes of the $m$ tosses (heads or tails). In particular, for each toss $i$, define a random variable $X_i$ as 
+\[
+X_i = \begin{cases}
+	1 & ~~\text{if the $i$-th toss results in heads} \\
+	0 & ~~\text{otherwise.}
+	\end{cases}
+\] 
+Then the data you see are the values $x_1,\ldots,x_m$ taken by these $m$ random variables.
+Based on this data, you want to estimate the parameters $\theta = (\pi, p_r, p_b)$.
+To help with this, for each toss $i$, define a latent (unobserved) random variable $Z_i$ as follows:
+\[
+Z_i = \begin{cases}
+	1 & ~~\text{if the $i$-th toss used the red coin} \\
+	0 & ~~\text{otherwise.}
+	\end{cases}
+\]
+
+\begin{enumerate}
+\item
+Let $X$ be a random variable denoting the outcome of a coin toss according to the process described above, and let $Z$ be the corresponding latent random variable indicating which coin was used, also as described above (both $X$ and $Z$ take values in $\{0,1\}$ as above).
+Write an expression for the joint distribution of $X$ and $Z$.
+Give your answer in the form 
+\[
+p(x,z; \, \theta) = \rule{5cm}{0.5pt}
+	\,.
+\]
+
+Solution:\\
+Through the conditional probability property, we have: $p(x,z; \, \theta) = p(x|z,\theta) p(z|\theta)$, then
+
+$p(x|z,\theta) p(z|\theta)= (p_r^x(1-p_r)^{1-x})^{z}(p_b^x(1-p_b)^{1-x})^{1-z}(\pi^z(1-\pi)^{1-z})$\\ $= (\pi p_r^x(1-p_r)^{1-x})^{z}((1-\pi)p_b^x(1-p_b)^{1-x})^{1-z}$\\
+Thus, $p(x,z; \, \theta)= (\pi p_r^x(1-p_r)^{1-x})^{z}((1-\pi)p_b^x(1-p_b)^{1-x})^{1-z}$\\
+
+
+\item 
+Write an expression for the complete-data log-likelihood, \\
+
+From question 1, we know \\
+$ln \L_c(\theta) = \sum_{i=1}^m ln p(x_i,z_i; \, \theta) = \sum_{i=1}^{m}[z_iln(\pi p_r^{x_i}(1-p_r)^{1-x_i})+(1-z_i)ln((1-\pi)p_b^{x_i}(1-p_b)^{1-x_i})
+    ]=\sum_{i=1}^{m}[z_i(ln(\pi)+x_iln(p_r)+(1-x_i)ln(1-p_r))+(1-z_i)(ln(1-\pi)+x_iln(p_b)+(1-x_i)ln(1-p_b))]$\\
+
+\item 
+Suppose you knew the values $z_i$ taken by the latent variables $Z_i$. What would be the maximum-likelihood parameter estimates $\hat{\theta}$? Give expressions for $\hat{\pi}$, $\hat{p}_r$, and $\hat{p}_b$ (in terms of $x_i$ and $z_i$).
+
+$ \hat{\pi} = \frac{\sum_{i=1}^{m}z_i}{m},
+ \hat{p}_r = \frac{\sum_{i=1}^{m}z_ix_i}{\sum_{i=1}^{m}z_i},
+ \hat{p}_b = \frac{\sum_{i=1}^{m}(1-z_i)x_i}{\sum_{i=1}^{m}(1-z_i)} $
+
+\item
+In the absence of knowledge of $z_i$, one possibility for estimating $\theta$ is to use the EM algorithm. Recall that the algorithm starts with some initial parameter estimates $\theta^0$, and then on each iteration $t$, performs an E-step followed by an M-step. Let $\theta^t$ denote the parameter estimates at the start of iteration $t$. In the E-step, for each toss $i$, the algorithm requires computing the posterior distribution of the latent variable $Z_i$ under the current parameters $\theta^t$. Calculate the posterior probability $\P(Z_i = 1 \,|\, X_i = x_i; \,\theta^t)$. 
+\emph{(Hint: Use Bayes' rule.)}
+
+By using the Bayes' Rule, we have:\\
+\[
+P(Z_i = 1 \,|\, X_i = x_i; \,\theta^t) = \frac{P(X_i=x_i|Z_i=1)P(Z_i=1)}{\sum_{a=0,1}P(X_i=x_i|Z_i=a)P(Z_i=a)}
+= \frac{p_{rt}^{x_i}(1-p_{rt})^{1-x_i}\pi_t}{(p_{bt}^{x_i}(1-p_{bt})^{1-x_i})(1-\pi_t)+p_{rt}^{x_i}(1-p_{rt})^{1-x_i}\pi_t}
+\]
+
+\item 
+For each toss $i$, denote the posterior probability computed in part (d) above by $\gamma^{t}_i$ (so that $\gamma^{t}_i = P(Z_i = 1 \,|\, X_i = x_i; \, \theta^t)$).
+Then the expected complete-data log-likelihood with respect to these posterior distributions is 
+\[
+%\E_{Z_1,\ldots,Z_m}[\, \ln \L_c(\theta) \,] = 
+\sum_{i=1}^m \Big( \gamma^{t}_i \cdot \ln p(x_i,1; \, \theta) + (1-\gamma^{t}_i) \cdot \ln p(x_i,0; \, \theta) \Big)
+	\,.
+\]
+The M-step of the EM algorithm requires finding parameters $\theta^{t+1}$ that maximize this expected complete-data log-likelihood.
+
+Determine the updated parameters $\theta^{t+1}$. Give expressions for $\pi^{t+1}$, $p_r^{t+1}$, and $p_b^{t+1}$ (in terms of $x_i$ and $\gamma^{t}_i$).
+
+\[
+\hat{\pi}^{t+1} = \frac{\sum_{i=1}^{m}\gamma_i^t}{m}, 
+\hat{p}_r^{t+1} = \frac{\sum_{i=1}^{m}\gamma_i^tx_i}{\sum_{i=1}^{m}\gamma_i}, 
+\hat{p}_b^{t+1} = \frac{\sum_{i=1}^{m}(1-\gamma_i^t)x_i}{\sum_{i=1}^{m}(1-\gamma_i^t)} 
+\]
+\end{enumerate}

@@ -1,0 +1,219 @@
+\documentclass[english]{article}
+\usepackage{comment}
+\usepackage[letterpaper]{geometry}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+
+\title{CIS 520, Machine Learning, Fall 2020 \\ Homework 7\\
+Due: Monday, November 23rd, 11:59pm \\
+Submit to Gradescope}
+\date{}
+\author{Yuezhong Chen, Sheil Sarda}
+
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+\begin{enumerate}
+    \item 
+    \begin{enumerate}
+        \item It is appropriate as causes of precipitation include many other factors besides previous day precipitation.
+        \item Not appropriate as there is nothing hidden.
+        \item Appropriate as factors other than preferences may affect the pleasure from a specific movie.
+        \item Appropriate, as many factors affect market prices besides latest prices.
+    \end{enumerate}
+    \item
+    \begin{enumerate}
+        \item False, as Markov models depend only on the last state.
+        \item True, as it give more parameters and more freedom to fit the training data.
+    \end{enumerate}
+    \item This probability may certainly depend on the time of the day which is not a random variable, so a vanilla HMM with a constant transition matrix would not work well.
+    \item One can take a grid of times in a 24 hours period and us an independent transition matrix for each such time.
+\end{enumerate}
+
+\section*{Problem 2}
+\begin{enumerate}
+    \item \begin{enumerate}
+        \item $Z_2 = ReLU(UX_2+WZ_1); O_2 = softmax(VZ_2)$
+        \item Because $Z_2 = ReLU(UX_2+WZ_1)$, we firstly calculate the following:
+        \[
+         UX_2+WZ_1 = 
+         \begin{pmatrix}
+                 5.5 & 2.3 & 2.0 \\
+                 3.2 & 7.1 & 0.5
+         \end{pmatrix}
+         \begin{pmatrix}
+                 0 \\
+                 0 \\
+                 1
+         \end{pmatrix}
+         +
+         \begin{pmatrix}
+                 0.5 & 0.2 \\
+                 2.0 & 0.9
+         \end{pmatrix}
+         \begin{pmatrix}
+                 0.5 \\
+                 0.5
+         \end{pmatrix}
+         =
+         \begin{pmatrix}
+                 2.0 \\
+                 0.5
+         \end{pmatrix}
+         +
+         \begin{pmatrix}
+                 0.35 \\
+                 1.45
+         \end{pmatrix}
+        \]
+        Thus, $Z_2 = 
+        \begin{pmatrix}
+                 2.35 \\
+                 1.95
+         \end{pmatrix}$. And because $O_2 = softmax(VZ_2)$
+         \[
+         VZ_2 =
+         \begin{pmatrix}
+                 0.4 & 1.3 \\
+                 0.6 & 0.9 \\
+                 1.6 & 0.3
+         \end{pmatrix}
+         \begin{pmatrix}
+                 2.35 \\
+                 1.95
+         \end{pmatrix}=
+         \begin{pmatrix}
+                 3.475 \\
+                 3.165 \\
+                 4.345
+         \end{pmatrix}
+         \]
+         Thus, $O_2= softmax
+         \begin{pmatrix}
+                 3.475 \\
+                 3.165 \\
+                 4.345
+         \end{pmatrix} \approx 
+         \begin{pmatrix}
+                 0.243 \\
+                 0.178 \\
+                 0.579
+         \end{pmatrix}$.
+         
+        \item It is watching TV with probability 0.5793.
+    \end{enumerate}
+    \item \begin{enumerate}
+        \item $Z_3 = ReLU(UX_3+WZ_2) = ReLU(UO_2+WZ_2); O_3 = softmax(VZ_3)$
+        \item Following the same strategies above, we have:
+        \[
+        Z_3 \approx
+        \begin{pmatrix}
+                 3.25 \\
+                 1.95
+         \end{pmatrix}, 
+         O_3 \approx
+        \begin{pmatrix}
+                 0.9047 \\
+                 0.0658 \\
+                 0.0295
+         \end{pmatrix}
+        \]
+        \item It is singing with probability 0.9047.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Problem 3}
+\begin{enumerate}
+    \item $p\left(X_{1}, X_{2}, X_{3}, X_{4}, X_{5}, X_{6}\right)= p(X_1)p(X_2)p(X_3 | X_1)p(X_4 | X_1, X_2)p(X_5 | X_3, X_4)p(X_6 | X_4)$
+    
+    \item $p\left(X_{1}, X_{2}, X_{3}, X_{4}, X_{5}, X_{6}\right)=p\left(X_{1}\right) p\left(X_{2}\right) p\left(X_{3}\right) p\left(X_{4}\right) p\left(X_{5} \mid X_{3}\right) p\left(X_{6} \mid X_{3}\right)$
+    
+    No, it is not included since this distribution has a restriction on $X_6 | X_3$ whereas the original network has a restriction on $X_6 | X_4$.
+    \item If the edge from $X_3$ to $X_5$ is removed, will the class of joint probability distributions that can be represented by the resulting Bayesian network be smaller or larger than that associated with the original network?
+    \newline
+    The class of joint probability distributions would be larger if the edge were removed, because we are removing the restriction on $X_5 | X_3$.
+    \item 
+    \begin{enumerate}
+        \item $p\left(X_{1}, X_{2}\right)=p\left(X_{1}\right) p\left(X_{2}\right)$. True, are not connected by a path.
+        \item $p\left(X_{3}, X_{6} \mid X_{4}\right)=p\left(X_{3} \mid X_{4}\right) p\left(X_{6} \mid X_{4}\right)$. True, $X_3$ and $X_6$ are not connected.
+        \item $p\left(X_{1}, X_{2} \mid X_{6}\right)=p\left(X_{1} \mid X_{6}\right) p\left(X_{2} \mid X_{6}\right)$. True, $X_1$ and $X_2$ are not connected.
+        \item $p\left(X_{2}, X_{5} \mid X_{4}\right)=p\left(X_{2} \mid X_{4}\right) p\left(X_{5} \mid X_{4}\right)$. False, $X_2$ and $X_5$ are connected through $X_4$.
+    \end{enumerate}
+\end{enumerate}
+\section*{Problem 4}
+\begin{enumerate}
+    \item 4.1 Nothing to Report. Please skip.
+    \item Do you add the link(yes/no)?
+    \\ Steps: 
+    
+    $\operatorname{P}(B)$ = 0.706 \newline
+    $\operatorname{P}(B|A)$ = 0.727 \newline
+    $\operatorname{P}(B|A^C$) = 0.667
+    
+    Since the difference between conditional probabilities and the probability of the event is less than 0.05, A and B are independent. Do not add the link.
+    
+    \item Do you add the link(yes/no)?
+	\\ Steps: 
+    
+    $\operatorname{P}(C) = 0.588$ \newline
+    $\operatorname{P}(C|A) = 0.545$ \newline
+    $\operatorname{P}(C|A^C) = 0.667$
+    
+    Since the difference between conditional probabilities and the probability of the event is greater than 0.05, add the link.
+    
+    \item Do you add the link(yes/no)?
+	\\ Steps: 
+    
+    $\operatorname{P}(C | B) = 0.583$ \newline
+    $\operatorname{P}(C | B^C) = 0.600$ 
+        
+    Since the difference between conditional probabilities and the probability of the event is less than 0.05, do not add the link.
+    
+    \item Do you add the link(yes/no)?
+	\\ Steps: 
+    
+    $\operatorname{P}(D) = 0.412$ \newline
+    $\operatorname{P}(D | A) = 0.454$ \newline
+    $\operatorname{P}(D | A^C) = 0.333$ 
+        
+    Since the difference between conditional probabilities and the probability of the event is greater than 0.05, add the link.
+    
+    \item Do you add the link(yes/no)?
+	\\ Steps: 
+    
+    $\operatorname{P}(D | B) = 0.454 $\newline
+    $\operatorname{P}(D | B^C) = 0.600 $
+        
+    Since the difference between conditional probabilities and the probability of the event is greater than 0.05, add the link.
+    
+    \item Do you add the link(yes/no)?
+	\\ Steps: 
+    
+    $\operatorname{P}(D | C) = 0.700$ 
+        
+    Since the difference between conditional probabilities and the probability of the event is greater than 0.05, add the link.
+    
+    \item 
+    % This code uses the tikz package
+    \begin{tikzpicture}
+    \draw[step=9cm,white,very thin] (-2,-2) grid (3,3);
+   
+    \node (v0) at (0.458,-1) {A};
+    \node (v1) at (2,-1) {B};
+    \node (v2) at (1,0) {C};
+    \node (v3) at (2,0) {D};
+    \draw [->] (v0) edge (v2);
+    \draw [->] (v0) edge (v3);
+    \draw [->] (v1) edge (v3);
+    \draw [->] (v2) edge (v3);
+    \end{tikzpicture}
+\end{enumerate}
+\end{document}
