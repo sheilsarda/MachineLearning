@@ -1,0 +1,51 @@
+\section{Perceptron vs.\ Winnow}
+
+
+
+
+\paragraph{(a) Sparse target vector $\u$, dense feature vectors $\x_t$.}
+~\\
+
+Winnow Algorithm is a better choice. Because
+\[
+||x_t||_2 = R_2 = \sqrt{d} 
+\]
+\[
+||u||_2 = \sqrt{k}
+\]
+Also, we know $||u||_1 = k$ and $R_{\infty} = 1$. When we consider the upper bounds of the errors of Winnow Algorithm, we have 
+\[
+\frac{2ln(d)k^2}{\gamma^2}
+\]
+Similarly, for Perceptron Algorithm: 
+\[
+\frac{dk}{\gamma^2}
+\]
+
+
+Because $k<<d$, we know $\frac{dk}{\gamma^2} >> \frac{2ln(d)k^2}{\gamma^2}$. Then Winnow Algorithm is a better choice.
+
+\paragraph{(b) Dense target vector $\u$, sparse feature vectors $\x_t$.}
+~\\
+
+Perceptron Algorithm is a better choice. Because
+\[
+R_2 = \sqrt{k}
+\]
+\[
+||u||_2 \leq 2\sqrt{d}
+\]
+Also, we know $R_\infty = 1$ and $||u||_1 = d$. When we consider the upper bounds of the errors of Winnow Algorithm, we have 
+\[
+\frac{2ln(d)d^2}{\gamma^2}
+\]
+Similarly, for Perceptron Algorithm: 
+\[
+\frac{4kd}{\gamma^2}
+\]
+Because $k<<d$, we know $\frac{2d^2ln(d)}{\gamma^2} >> \frac{4kd}{\gamma^2}$. Then Perceptron Algorithm is a better choice.
+
+\paragraph{(c) If your problem has non-negative feature vectors $\x_t\in\R_+^d$, is the Winnow algorithm a meaningful choice? Why or why not? }
+~\\
+
+No. Since the classification model $u$ of Winnow Algorithm is non-negative and $u^T x_t$ is always positive, when the data have the feature vectors $x_t \geq 0$. Then all the data are in the same class, indicating that Winnow is not a meaningful choice.

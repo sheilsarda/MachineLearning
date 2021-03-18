@@ -1,0 +1,44 @@
+
+
+\section{Singular Value Decomposition}
+
+\begin{enumerate}
+\item Let $\mathbf{X}$ be a $n$ by $p$ matrix. Show that if $\mathbf{X}$ has a rank $p$ (all its columns are linearly independent), and $n > p$, then using the $p$-dimensional pseudo-inverse $\mathbf{X}^{+} = \mathbf{V}_k \Lambda_k^{-1}\mathbf{U}_k^T$ in $\mathbf{\hat{w}}=\mathbf{X}^{+}\mathbf{y}$ with $k=p$ solves the least squares problem $\mathbf{\hat{w}} = \arg \min_{w} (\mathbf{y}-X\mathbf{w})^T(\mathbf{y}-\mathbf{X}\mathbf{w})$.
+~\\
+
+SVD: There is an orthogonal $n$ by $n$ matrix $U$, an orthogonal $p$ by $p$ matrix $V$, and an upper-diagonal $n$ by $p$ matrix $\Lambda$ whose top $p$ rows form a diagonal matrix with all the diagonal elements not zeros, because $X$ has rank $p$, and whose bottom $(n – p)$ rows are all zeros, such that
+$X = U\Lambda V^T$. The left pseudo-inverse of $\Lambda$ is a p by n matrix $\Lambda^{-1}$ which has its first p columns form a diagonal p by p matrix with its diagonal elements reciprocals of the respective elements of $\Lambda$ and the remaining $(n – p)$ columns made of zeros.\\
+Let us denote the p by p unit matrix $I_p$, the matrix formed by the top p rows of $\Lambda$ as $\Lambda_p$, and the one formed by the first p columns of $\Lambda^{-1}$ as $\Lambda_p^{-1}$. So
+\[
+\Lambda^{-1} \Lambda = \Lambda_p^{-1} \Lambda_p = I_p
+\]
+\[
+\Lambda^T \Lambda = \Lambda_p^2
+\]
+\[
+(\Lambda_p^2)^{-1} \Lambda^T = \Lambda^{-1}
+\]
+We want to minimize $f(w)=(y-Xw)^T(y-Xw)$. The derivatives vanish at the minimum: $0=\frac{1}{2}\frac{\partial f}{\partial w}=X^TX\mathbf{\hat{w}}$, then $X^Ty=X^TX\mathbf{\hat{w}}$. Thus,
+\[
+V\Lambda^T U^T y = V\Lambda^T U^T U\Lambda U^T\mathbf{\hat{w}} = V\Lambda^T \Lambda V^T\mathbf{\hat{w}} = V\Lambda_p^2 V^T\mathbf{\hat{w}}
+\]
+Finally, we have
+\[
+\mathbf{\hat{w}} = V(\Lambda_p^2)^{-1}V^T(V\Lambda_p^2 V^T\mathbf{\hat{w}}) =  V(\Lambda_p^2)^{-1}V^T(V\Lambda^T U^T y) = V\Lambda^{-1} U^T y = X^{+}y
+\]
+
+\item
+Given the eigenvectors of $\mathbf{XX}^T$ as $(\mathbf{u}_1, ..., \mathbf{u}_k)$ and corresponding eigenvalues as $(\lambda_i, ..., \lambda_k$), give an expression for computing an eigenvector $\mathbf{v}_i$ of $\mathbf{X}^T\mathbf{X}$ in terms of $\mathbf{X}$, $\mathbf{u}_i$, and $\lambda_i$.
+~\\
+We are given that $\lambda_i u_i = XX^T u_i$. Now we multiply $X^T$ on the LHS: $X^T(\lambda_i u_i) = \lambda_i(X^T u_i) = X^T(XX^T u_i) = X^TX(X^T u_i)$. We see that $X^T u_i$ is an eigenvector of $X^T X$ with eigenvalue $\lambda_i$ on condition that
+\[
+X^T u_i \neq 0
+\]
+This condition can only be violated when $\lambda_i = 0$ because $X^T u_i = 0$ and $XX^T u_i = \lambda_i u_i$.
+
+\item Let $\mathbf{X}$ be a $n$ by $p$ matrix. Under what conditions (in terms of the relationship between $n$ and $p$) would the above calculation be an efficient way to find the largest eigenvectors of $\mathbf{X}^T\mathbf{X}$?
+~\\
+
+If $n<p$, $XX^T$ is an n by n matrix and $X^T X$ is a p by p matrix, and it is easier to find eigenvalues of a matrix of smaller size.
+
+\end{enumerate}
