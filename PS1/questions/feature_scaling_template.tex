@@ -1,0 +1,25 @@
+\section{Feature Scaling Effects (Programming) }
+
+\begin{enumerate}
+    \item Report the training and testing accuracies for unstandardized and standardized data for both Decision Trees and KNNs using their default hyperparameter values. 
+    \begin{center}
+        \begin{tabular}{ |p{3cm}||p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|  }
+         \hline
+         \multicolumn{5}{|c|}{Scores for Unstandardized and Standardized Data} \\
+         \hline
+         & KNN Unscaled & KNN Scaled & DT Unscaled & DT Scaled\\
+         \hline
+         Training Accuracy   &  0.7899  &  0.8177 &  1.0000  &  1.0000\\
+         Test Accuracy   &  0.7013  &  0.8182 &  0.7532  &  0.7532\\
+         \hline
+        \end{tabular}
+    \end{center}
+    \item What happens to performance when we use standardization for data with decision trees? What about KNN? Briefly explain why each happened.
+    \newline
+    \newline
+    For decision trees, scaling leaves the training and test accuracy unchanged because it does not impact what the decision tree minimizes.
+   \newline
+   \newline
+   For KNN, scaling improves performance because KNN's rely on a measure of distance. By re-scaling, we remove the noise associated with the distance, resulting in an improvement of train and test accuracy. 
+   
+\end{enumerate}

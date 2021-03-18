@@ -1,0 +1,40 @@
+\section{High dimensional hi-jinx}
+
+\begin{enumerate}
+\item Intra-class distance.
+  \begin{align*}
+    \E[(X - X')^2] =&\; \E[X^2]-2\E[XX']+\E[X'^2] \\
+    =&\; \E[X^2]-2\E[X]\E[X']+\E[X'^2] \\
+    =&\; \sigma^2+\mu_1^2-2\mu_1^2+\sigma^2+\mu_1^2\\
+    =&\; 2\sigma^2
+  \end{align*}
+
+\item Inter-class distance.
+  \begin{align*}
+    \E[(X - X')^2] =&\;  \E[X^2]-2\E[XX']+\E[X'^2] \\
+    =&\; \E[X^2]-2\E[X]\E[X']+\E[X'^2] \\
+    =&\; \sigma^2+\mu_1^2-2\mu_1\mu_2+\sigma^2+\mu_2^2\\
+    =&\; 2\sigma^2+(\mu_1-\mu_2)^2
+  \end{align*}
+
+\item Intra-class distance, m-dimensions.
+  \begin{align*}
+    \E[\sum_{j=1}^m (X_{j} - X'_{j})^2] =&\; \sum_{j=1}^m (\E[X_j^2]-2\E[X_jX'_j]+\E[X'^2_j])\\
+    =&\; \sum_{j=1}^m (\E[X_j^2]-2\E[X_j]\E[X'_j]+\E[X'^2_j])\\
+    =&\; m(\sigma^2+\mu_1^2-2\mu_1^2+\sigma^2+\mu_1^2)\\
+    =&\; 2m\sigma^2
+  \end{align*}
+
+\item Inter-class distance, m-dimensions.
+  \begin{align*}
+    \E[\sum_{j=1}^m (X_{j} - X'_{j})^2] =&\; \sum_{j=1}^m (\E[X_j^2]-2\E[X_jX'_j]+\E[X'^2_j])\\
+    =&\; \sum_{j=1}^m (\E[X_j^2]-2\E[X_j]\E[X'_j]+\E[X'^2_j])\\
+    =&\; \sum_{j=1}^m (\sigma^2+\mu_{1j}^2-2\mu_{1j}\mu_{2j}+\sigma^2+\mu_{2j}^2)\\
+    =&\; \sum_{j=1}^m ((\mu_{1j}-\mu_{2j})^2+2\sigma^2)\\
+    =&\; \sum_{j=1}^m (\mu_{1j}-\mu_{2j})^2+2m\sigma^2
+  \end{align*}
+
+\item The ratio of expected intra-class distance to inter-class
+  distance is: $\frac{2m\sigma^2}{2m\sigma^2+(\mu_{11}-\mu_{21})^2}$.  As $m \to \infty$, this
+  ratio approaches $1$. This means that as $m \to \infty$, intra-class and inter-class relationships become indistinguishable and performance of the classifier gets worse.
+\end{enumerate}

@@ -1,0 +1,37 @@
+\section{K-nearest neighbors Classification (Programming)}
+
+
+\begin{enumerate}
+   \item How does having a larger dataset might influence the performance of KNN?
+
+    Having a larger data set improves the accuracy of a KNN at a cost to the running time. 
+    Since the KNN must calculate the distance to each training data point, running time increases linearly with size of the training set and test set.
+    
+    \item Tabulate your results in Table \ref{knnTable} for the \textbf{validation set}.
+
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{ |c|c|c| } 
+     \hline
+     \textbf{K} & \textbf{Norm} & \textbf{Accuracy (\%)} \\ 
+     3 & L1 & 72.17\% \\ 
+     3 & L2 & 69.57\% \\
+     3 & L-inf & 73.04\% \\ 
+     \hline
+     5 & L1 & 75.65\% \\ 
+     5 & L2 & 76.52\% \\
+     5 & L-inf & 73.04\% \\ 
+     \hline
+     7 & L1 & 73.04\% \\ 
+     7 & L2 & 77.39\% \\
+     7 & L-inf & 73.04\% \\ 
+     \hline
+    \end{tabular}
+    \caption{Accuracy for the KNN classification problem on the validation set}
+    \label{knnTable}
+    \end{table}
+    
+    \item Finally, mention the best K and the norm combination you have settled upon from the above table and report the accuracy on the test set using that combination.
+    \newline\newline
+    From the above table, the best hyper-parameters were $K = 7$ with the $L2$ norm. The accuracy on the test set for this combination is $71.43\%$.
+\end{enumerate}
