@@ -54,3 +54,10 @@ Taught by Prof. Lyle Ungar in Fall 2020
 - Derive optimal behavior policies using Markov Decision Processes
 - Understand and implement Q-learning
 - Understand the relationship between Autoencoders and PCA
+
+## Final Project: Optimal Portfolio Construction in Large Cap US Stocks using Machine Learning
+
+The process of selecting a portfolio is composed of two stages: the first to analyze the historical data and build
+an idea on the behavior of assets in the future, and the second one uses these insights to build the portfolio. Our project 
+aims to use a supervised learning algorithm to forecast the direction of the stock and then create a portfolio by allocating
+a percentage of funds to each stock.
