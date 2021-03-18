@@ -1,0 +1,56 @@
+\section{Reinforcement Learning}
+
+\begin{enumerate}
+\item 
+Formulate an MDP for the \texttt{Chain} environment by specifying each component of the tuple $\mathcal{M} = \langle \mathcal{S},\mathcal{A},p,r,\gamma \rangle$. For the components $p$ and $r$, write down $p(s'|s,a)$ and $r(s,a,s')$ for each setting of $s,a,s'$ for which the probability/reward is non-zero:
+
+The MDP formulation is as follows:
+\begin{enumerate}
+\item The set of states $\mathcal{S} = \{0,1,2,3,4\}$
+\item The set of actions $\mathcal{A} = \{f,b\}$
+\item In the states of 0 1 2 or 3, we have:\\
+
+$p(0|i,f) = 0.1, p(0|i,b) = 0.9$ and $ p(i+1|i,f) = 0.9, p(i+1|i,b) = 0.1$\\
+$r(i,f,0) = 2, 
+r(i,f,i+1) = 0$ and $r(i,b,0) = 2, r(i,b,i+1) = 0$\\
+
+When the state is 4, we have:\\
+
+$p(0|4,f) = 0.1, p(0|4,b) = 0.9$ and $p(4|4,f) = 0.9, p(4|4,b) = 0.1$\\
+$r(4,f,0) = 2, r(4,f,4) = 10$ and $r(4,b,0) = 2, r(4,b,4) = 10$
+\end{enumerate}
+
+\item
+Find the optimal state-value function $V^*$, i.e.\ find the optimal value $V^*(s)$ for each state $s$:
+
+$
+V^* = 
+\begin{bmatrix}
+40.742& 45.525& 51.430& 58.720& 67.720
+\end{bmatrix}
+$\\
+
+\item
+Using your solution to the second part above, find an optimal deterministic policy $\pi^*$, i.e. find an optimal action $\pi^*(s)$ for each state $s$:
+
+$ 
+Q^* = 
+\begin{bmatrix}
+   40.742 & 38.898\\
+   45.525 & 39.430\\
+   51.430 & 40.086\\
+   58.720 & 40.896\\
+   67.720 & 41.896\\
+\end{bmatrix}
+$\\
+
+The optimal policy is: 
+$
+\pi^{*} = 
+\begin{bmatrix}
+0&0&0&0&0
+\end{bmatrix}
+$\\
+\end{enumerate}
+
+
