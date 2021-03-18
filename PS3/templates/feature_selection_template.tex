@@ -1,0 +1,67 @@
+\section{Feature Selection}
+OLS regression with $L_0$ regularization is expressed as: $\operatorname{argmin}_{w}\|y-X w\|_{2}^{2}+\lambda\|w\|_{0}$
+	\newline
+	\newline
+	\begin{table}[h]
+		\centering
+\begin{tabular}{|c|c|c|c|c|}
+	\hline & $\mathrm{x}_{1}$ & $\mathrm{x}_{2}$ & $\mathrm{x}_{3}$ & $\mathrm{y}$ \\
+	\hline Sample 1 & 1 & 2 & 1.3 & 1 \\
+	\hline Sample 2 & 2 & 1 & 7.3 & 9 \\
+	\hline Sample 3 & 1 & 1 & 2.8 & 4 \\
+	\hline
+\end{tabular}
+\end{table}
+\begin{enumerate}
+    \item Streamwise regression: for each round, $w$ is computed based on all the features in the current round model under OLS only without regularization, and then Err is computed based on that $w$.
+    \begin{enumerate}
+        \item Add each feature in the order of $x_1, x_2, x_3$. Assume $\lambda = 0.2$ and apply $L_0$ regularization. Error of models:
+        \begin{itemize}
+        	\item $Err_0 = 1^2 + 9^2 + 4^2 = 98$
+        	\item Try to add $x_1$ into the model. $Err_1 = 10.03$. \\
+        			Coefficients: \verb|[3.83, 0, 0]|
+        	\item Try to add $x_2$ into the model. $Err_2 = 0.76$. \\
+        			Coefficients: \verb|[5.73, -2.27, 0]|
+        	\item Try to add $x_3$ into the model. $Err_3 = 0.6$. \\
+        			Coefficients: \verb|[50, -18, -10]|
+        \end{itemize}
+        \item Add each feature in the order of $x_3, x_2, x_1$. Assume $\lambda = 0.2$ and apply $L_0$ regularization. Final selected feature(s): $x_3$. \\
+        $Err_3 = 0.86$ \\
+        Coefficients: \verb|[0, 0, 1.25]|
+        \item From the above parts, we learn that $x_3$ alone provides performance comparable to $x_1$ and $x_2$ combined ($0.76$ vs $0.86$), but the overall error of the second model is higher because Streamwise regression rejects $x_1$ and $x_2$ to prevent overfitting at the cost of in-sample performance.
+    \end{enumerate}
+    
+    \item Stepwise regression: for each round, $w$ is computed based on all the features in the current round model under OLS only without regularization, and then Err is computed based on that $w$.
+    \begin{enumerate}
+        \item Initial $Err_{old} = 1^2 + 9^2 + 4^2 = 98$.
+        \item Try adding each feature respectively and compute their $Err$:
+        \begin{itemize}
+        	\item $Err_1 = 10.03$. \\
+        	Coefficients: \verb|[3.83, 0, 0]|
+        	\item $Err_2 = 60.70$. \\
+			Coefficients: \verb|[0, 2.50, 0]|
+        	\item $Err_3 = 0.86$. \\
+			Coefficients: \verb|[0, 0, 1.25]|        	
+        \end{itemize}
+        \item The feature to add to the model is $x_3$. The associated error is $0.86$.
+        \item Repeat adding each feature respectively with computed $Err$. Pick features to add to the model and report when to halt.
+        \begin{itemize}
+        	\item Adding features $x_1$ and $x_3$: $Err = 0.88$. \\
+			Coefficients: \verb|[-0.64, 0, 1.44]|        	
+        	\item Adding features $x_2$ and $x_3$: $Err = 0.86$. \\
+			Coefficients: \verb|[0, -0.24, 1.30]|        				
+        \end{itemize}
+    Since both $Err$ values in the above cases is greater than $Err_{old}$, we halt the stepwise regression here.
+        \item Final selected feature(s) is $x_3$. 
+        \item Pros of streamwise regression:
+        \begin{itemize}
+        	\item When space of potential features is large, overfitting can be controlled by dynamically adjusting the threshold for adding features.
+        	\item All features do not have to be known in advance, enabling dynamic feature generation.
+        	\item Less computationally intense when dealing with large datasets with many features.
+        \end{itemize}
+    	Cons of streamwise regression:
+    	\begin{itemize}
+    		\item Because the method adds variables in a certain order, the combination of predictors in the final model is determined by that order.
+    	\end{itemize}
+    \end{enumerate}   
+\end{enumerate}

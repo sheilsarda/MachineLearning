@@ -1,0 +1,38 @@
+\section{Regularization Penalties}
+Assume bias term in the regression is zero. Assume $\lambda = 1$. 
+\begin{enumerate}
+    \item Assume that the response variable is distributed according to $y_{i} \sim N\left(w \cdot x_{i}, \sigma^{2}\right)$ (no regularization penalty is needed). MLE estimate $\widehat{w}_{M L E}$ of $w$:
+    $ (X^T X)^{-1} X^TY $ \\
+    \verb| [0.88914862, -0.82601591, 4.19023612]|
+    \item $\widehat{w}$ for $p = 2$. $w = (X^T X + I)^{-1}X^TY$ \\
+    \verb|[0.86455156, -0.82104237, 4.12186079]|
+    \item $\widehat{w}$ for $p = 1$. Using \verb|sklearn|'s Lasso regression tool: \\
+    \verb|[0.875, -0.818, 4.182]|    
+    \item Considering all cases where different components of $w$ are set to 0.
+\begin{table}[h]
+    	\centering
+    	\begin{tabular}{|c|c|c|c|}
+    		\hline
+    		$X_1$ & $X_2$ & $X_3$ & $\widehat{w}$ \\ \hline
+    		o    & o    & o    & 3108               \\
+    		o    & o    &      & 4136               \\
+    		o    &      & o    & 3138               \\
+    		o    &      &      & 4225               \\
+			     & o    & o    & 3131               \\
+			     & o    &      & 4160               \\
+			     &      & o    & 3171               \\
+			     &      &      & 12800               \\ \hline    		    		
+    	\end{tabular}
+    \end{table}
+    \item Part 1 of this question (OLS) provides a baseline $\widehat{w}$, which is improved upon by $L_1$ and $L_2$ regression since it adds a penalty proportional to the magnitude of the weights. $L_1$ was the most effective in shrinking the errors.
+    \item Exploring the tradeoff between minimizing the sum of squared errors and the magnitude of $\widehat{w}$.
+    \begin{enumerate}
+        \item $\left\|\widehat{w}_{M L E}\right\|_{2}^{2} /\left\|y-X \widehat{w}_{M L E}\right\|_{2}^{2} = 0.006$
+        \item \begin{enumerate}
+        	\item Impact on $\left\|y-X \widehat{w}_{M L E}\right\|_{2}^{2}$ when going from $N$ to $2N$ samples will be proportional, since we expect training error to increase. As $N$ grows, it eventually hits an asymptote where the linear model is fitting the underlying distribution as well as possible. At this point, training error no longer depends on the number of samples $N$.
+        	\item Impact on $\left\|\widehat{w}_{M L E}\right\|_{2}^{2}$ when going from $N$ to $2N$ samples cannot be mathematically modeled accurately, since it will grow with $N$ within some range, then start shrinking towards an optimal $\widehat{w}$ as the linear model reaches its optimal performance. At this asymptote, $\widehat{w}_{M L E}$ too will no longer depend on the number of samples $N$.
+        \end{enumerate}
+    \item To find $\lambda$ for which the estimate $\widehat{w}$ satisfies: $0.8<\|\widehat{w}\|_{2}^{2} /\left\|\widehat{w}_{M L E}\right\|_{2}^{2}<0.9$, we use trial and error. \\
+    $\lambda = 5$ satisfies this equation.
+    \end{enumerate}
+\end{enumerate}
